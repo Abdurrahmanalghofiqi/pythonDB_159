@@ -3,50 +3,51 @@ from tkinter import messagebox
 import sqlite3
 
 # Fungsi untuk menentukan prediksi berdasarkan nilai tertinggi
-def predict_major(mat, phy, chem, bio, indo, eng, hist, geo, econ, socio):
+def predict_major(matematika, sejarah, biologi, kedokteran, bahasa_indonesia, kimia, aik, penjas, seni_budaya, bahas_inggris):
     subjects = [mat, phy, chem, bio, indo, eng, hist, geo, econ, socio]
     max_subject_index = subjects.index(max(subjects))
 
     if max_subject_index == 0:
-        return "Pendidikan Matematika"
+        return "Matematika"
     elif max_subject_index == 1:
-        return "ASTRONOT"
+        return "Sejarah"
     elif max_subject_index == 2:
-        return "Bom Atom"
+        return "Biologi"
     elif max_subject_index == 3:
         return "Kedokteran"
     elif max_subject_index == 4:
-        return "Bahasa"
+        return "Bahasa Indonesia"
     elif max_subject_index == 5:
-        return "Bahasa Asing"
+        return "Kimia"
     elif max_subject_index == 6:
-        return "Pendongeng"
+        return "Aik"
     elif max_subject_index == 7:
-        return "Pendidikan Geografi"
+        return "Penjas"
     elif max_subject_index == 8:
-        return "FEB"
+        return "Seni Budaya"
     elif max_subject_index == 9:
-        return "Teknik"
+        return "Bahasa Inggris"
     else:
         return "Belum dapat diprediksi"
 
 # Fungsi untuk menambahkan nilai ke dalam database SQLite
-def add_data_to_db(name, mat, phy, chem, bio, indo, eng, hist, geo, econ, socio, prediction):
+def add_data_to_db(name, matematika, sejarah, biologi, kedokteran, bahasa_indonesia, kimia, aik, penjas, seni_budaya, bahas_inggris):
     conn = sqlite3.connect('nilai_siswa.db')
     cursor = conn.cursor()
 
     # Membuat tabel jika belum ada
     cursor.execute('''CREATE TABLE IF NOT EXISTS nilai_siswa (
                         nama_siswa TEXT,
-                        biologi INTEGER,
                         matematika INTEGER,
-                        multi INTEGER,
-                        pemrograman INTEGER,
+                        sejarah INTEGER,
+                        biologi INTEGER,
+                        kedokteran INTEGER,
+                        bahasa_indonesia INTEGER,
                         kimia INTEGER,
-                        b_indo INTEGER,
-                        ips INTEGER,
-                        fisika INTEGER,
-                        inggris INTEGER,
+                        aik INTEGER,
+                        penjas INTEGER,
+                        seni_budaya INTEGER,
+                        bahas_inggris INTEGER,
                         prediksi_fakultas TEXT)''')
 
     # Menambahkan data ke dalam tabel
@@ -62,24 +63,24 @@ def add_data_to_db(name, mat, phy, chem, bio, indo, eng, hist, geo, econ, socio,
 # Fungsi yang dijalankan ketika tombol submit ditekan
 def submit_button_pressed():
     name = entry_nama.get()
-    mat = int(entry_mat.get())
-    phy = int(entry_phy.get())
-    chem = int(entry_chem.get())
-    bio = int(entry_bio.get())
-    indo = int(entry_indo.get())
-    eng = int(entry_eng.get())
-    hist = int(entry_hist.get())
-    geo = int(entry_geo.get())
-    econ = int(entry_econ.get())
-    socio = int(entry_socio.get())
+    matematika = int(entry_mat.get())
+    sejarah = int(entry_phy.get())
+    biologi = int(entry_chem.get())
+    kedokteran = int(entry_bio.get())
+    bahasa_indonesia = int(entry_indo.get())
+    kimia = int(entry_eng.get())
+    aik = int(entry_hist.get())
+    penjas = int(entry_geo.get())
+    seni_budaya = int(entry_econ.get())
+    bahasa_inggris = int(entry_socio.get())
 
-    prediction = predict_major(mat, phy, chem, bio, indo, eng, hist, geo, econ, socio)
+    prediction = predict_major(matematika, sejarah, biologi, kedokteran, bahasa_indonesia, kimia, aik, penjas, seni_budaya, bahas_inggris)
     
     # Menampilkan hasil prediksi
     messagebox.showinfo("Prediksi Fakultas", f"Prediksi fakultas untuk {name}: {prediction}")
 
     # Menambahkan data ke dalam database
-    add_data_to_db(name, mat, phy, chem, bio, indo, eng, hist, geo, econ, socio, prediction)
+    add_data_to_db(name, matematika, sejarah, biologi, kedokteran, bahasa_indonesia, kimia, aik, penjas, seni_budaya, bahas_inggris)
 
 # Membuat GUI dengan Tkinter
 root = tk.Tk()
@@ -92,64 +93,64 @@ entry_nama = tk.Entry(root)
 entry_nama.pack()
 
 # Membuat label dan entry untuk nilai Matematika
-label_mat = tk.Label(root, text="Nilai Matematika:")
-label_mat.pack()
-entry_mat = tk.Entry(root)
-entry_mat.pack()
+label_matematika = tk.Label(root, text="Nilai Matematika:")
+label_matematika.pack()
+entry_matematika = tk.Entry(root)
+entry_matematika.pack()
 
 # Membuat label dan entry untuk nilai Fisika
-label_phy = tk.Label(root, text="Nilai Fisika:")
-label_phy.pack()
-entry_phy = tk.Entry(root)
-entry_phy.pack()
+label_sejarah = tk.Label(root, text="Nilai Sejarah:")
+label_sejarah.pack()
+entry_sejarah = tk.Entry(root)
+entry_sejarah.pack()
 
 # Membuat label dan entry untuk nilai Kimia
-label_chem = tk.Label(root, text="Nilai Kimia:")
-label_chem.pack()
-entry_chem = tk.Entry(root)
-entry_chem.pack()
+label_biologi = tk.Label(root, text="Nilai Biologi:")
+label_biologi.pack()
+entry_biologi = tk.Entry(root)
+entry_biologi.pack()
 
 # Membuat label dan entry untuk nilai Biologi
-label_bio = tk.Label(root, text="Nilai Biologi:")
-label_bio.pack()
-entry_bio = tk.Entry(root)
-entry_bio.pack()
+label_kedokteran = tk.Label(root, text="Nilai Kedokteran:")
+label_kedokteran.pack()
+entry_kedokteran = tk.Entry(root)
+entry_kedokteran.pack()
 
 # Membuat label dan entry untuk nilai Bahasa Indonesia
-label_indo = tk.Label(root, text="Nilai Bahasa Indonesia:")
-label_indo.pack()
-entry_indo = tk.Entry(root)
-entry_indo.pack()
+label_bahasa_indoonesia = tk.Label(root, text="Nilai Bahasa Indonesia:")
+label_bahasa_indoonesia.pack()
+entry_bahasa_indoonesia = tk.Entry(root)
+entry_bahasa_indoonesia.pack()
 
 # Membuat label dan entry untuk nilai Bahasa Inggris
-label_eng = tk.Label(root, text="Nilai Bahasa Inggris:")
-label_eng.pack()
-entry_eng = tk.Entry(root)
-entry_eng.pack()
+label_kimia = tk.Label(root, text="Nilai Kimia:")
+label_kimia.pack()
+entry_kimia = tk.Entry(root)
+entry_kimia.pack()
 
 # Membuat label dan entry untuk nilai Sejarah Indonesia
-label_hist = tk.Label(root, text="Nilai Sejarah Indonesia:")
-label_hist.pack()
-entry_hist = tk.Entry(root)
-entry_hist.pack()
+label_aik = tk.Label(root, text="Nilai Aik:")
+label_aik.pack()
+entry_aik = tk.Entry(root)
+entry_aik.pack()
 
 # Membuat label dan entry untuk nilai Geografi
-label_geo = tk.Label(root, text="Nilai Geografi:")
-label_geo.pack()
-entry_geo = tk.Entry(root)
-entry_geo.pack()
+label_penjas = tk.Label(root, text="Nilai Penjas:")
+label_penjas.pack()
+entry_penjas = tk.Entry(root)
+entry_penjas.pack()
 
 # Membuat label dan entry untuk nilai Ekonomi
-label_econ = tk.Label(root, text="Nilai Ekonomi:")
-label_econ.pack()
-entry_econ = tk.Entry(root)
-entry_econ.pack()
+label_seni_budaya = tk.Label(root, text="Nilai Seni Budaya:")
+label_seni_budaya.pack()
+entry_seni_budaya = tk.Entry(root)
+entry_seni_budaya.pack()
 
 # Membuat label dan entry untuk nilai Sosiologi
-label_socio = tk.Label(root, text="Nilai Sosiologi:")
-label_socio.pack()
-entry_socio = tk.Entry(root)
-entry_socio.pack()
+label_bahasa_inggris = tk.Label(root, text="Nilai Bahasa Inggris:")
+label_bahasa_inggris.pack()
+entry_bahasa_inggris = tk.Entry(root)
+entry_bahasa_inggris.pack()
 
 # Membuat tombol submit
 button_submit = tk.Button(root, text="Submit", command=submit_button_pressed)
